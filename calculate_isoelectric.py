@@ -1,8 +1,10 @@
+from Bio.SeqUtils.ProtParam import ProteinAnalysis as PA
 iep_list=[]
-with open('/home/mad149/Metagenome_grassmere/Halicovarius_salinus_genome/genome/EMBOSS_iep_Sept8.txt', 'r') as iep:
-    for line in iep:
-        if 'Isoelectric Point' in line:
-            iep_list.append(float(line.split('= ')[-1].split('\n')[0]))
+
+for record in SeqIO.parse('/home/mad149/Metagenome_grassmere/Halicovarius_salinus_genome/genome/metabat2_isolate_spades_2.11.fa.faa', 'fasta'):
+    protein=PA(record.seq)
+    iep_list.append(protein.isoelectric_point())
+
 import statistics
 average = statistics.mean(iep_list)
 print(average)
